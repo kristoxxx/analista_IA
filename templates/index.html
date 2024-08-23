@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFOPOL Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <div class="document-list">
+            <h3>Documentos Disponibles</h3>
+            <div id="doc-list">
+                <!-- Lista de documentos se generará aquí -->
+            </div>
+        </div>
+        <div class="chat-container">
+            <div id="chat-box" class="chat-box">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div id="thinking" class="thinking">Pensando<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>
+            <div class="input-container">
+                <input type="text" id="user_input" placeholder="Escribe tu consulta...">
+                <button onclick="sendMessage()">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function typeWriter(text, element, delay = 25) {
+            element.innerHTML = '';
+            let i = 0;
+            function typing() {
+                if (i < text.length) {
+                    let char = text.charAt(i);
+                    if (char === '<') {
+                        const tagEnd = text.indexOf('>', i) + 1;
+                        element.innerHTML += text.slice(i, tagEnd);
+                        i = tagEnd;
+                    } else {
+                        element.innerHTML += char;
+                        i++;
+                    }
+                    setTimeout(typing, delay);
+                    element.parentElement.scrollTop = element.parentElement.scrollHeight;
+                }
+            }
+            typing();
+        }
+
+        function loadDocuments() {
+            fetch('/get_documents')
+            .then(response => response.json())
+            .then(data => {
+                const docList = document.getElementById('doc-list');
+                docList.innerHTML = '';
+                data.documents.forEach(doc => {
+                    const docItem = document.createElement('div');
+                    docItem.className = 'doc-item';
+                    docItem.innerHTML = `
+                        <input type="checkbox" id="${doc.id}" value="${doc.id}">
+                        <label for="${doc.id}">${doc.filename}</label>
+                    `;
+                    docList.appendChild(docItem);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function getSelectedDocuments() {
+            const checkboxes = document.querySelectorAll('#doc-list input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(checkbox => checkbox.value);
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById('user_input').value;
+            const selectedDocs = getSelectedDocuments();
+            const chatBox = document.getElementById('chat-box');
+            const thinking = document.getElementById('thinking');
+
+            if (selectedDocs.length === 0) {
+                alert('Por favor, seleccione al menos un documento.');
+                return;
+            }
+
+            thinking.style.display = 'block';
+
+            const userMessage = document.createElement('div');
+            userMessage.className = 'user-message';
+            userMessage.textContent = userInput;
+            chatBox.appendChild(userMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ doc_ids: selectedDocs, input: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const assistantMessage = document.createElement('div');
+                assistantMessage.className = 'assistant-message';
+                chatBox.appendChild(assistantMessage);
+                if (data.error) {
+                    assistantMessage.textContent = `Error: ${data.error}`;
+                } else {
+                    typeWriter(data.response, assistantMessage);
+                }
+                chatBox.scrollTop = chatBox.scrollHeight;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'error-message';
+                errorMessage.textContent = `Error: ${error.message}`;
+                chatBox.appendChild(errorMessage);
+            })
+            .finally(() => {
+                thinking.style.display = 'none';
+            });
+
+            document.getElementById('user_input').value = '';
+        }
+
+        window.onload = loadDocuments;
+    </script>
+</body>
+</html>

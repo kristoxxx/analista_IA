@@ -1,0 +1,128 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.main-container {
+    display: flex;
+    width: 90%;
+    height: 80vh;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.document-list {
+    width: 250px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    overflow-y: auto;
+}
+
+.doc-item {
+    margin-bottom: 10px;
+}
+
+.chat-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-height: calc(80vh - 100px); /* Ajuste la altura máxima */
+}
+
+.input-container {
+    display: flex;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    height: 40px; /* Fija la altura del cuadro de texto */
+    resize: none; /* Evita que el cuadro de texto sea redimensionable */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.user-message, .assistant-message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user-message {
+    background-color: #e6f2ff;
+    align-self: flex-end;
+}
+
+.assistant-message {
+    background-color: #f0f0f0;
+    align-self: flex-start;
+}
+
+.thinking {
+    text-align: center;
+    margin-bottom: 10px;
+    font-style: italic;
+    color: #666;
+}
+
+.upload-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-container h2 {
+    margin-bottom: 20px;
+}
+
+#uploadForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#uploadStatus {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#documentList {
+    margin-top: 30px;
+}
+
+#processedDocs {
+    list-style-type: none;
+    padding: 0;
+}
+
+#processedDocs li {
+    margin-bottom: 5px;
+}
