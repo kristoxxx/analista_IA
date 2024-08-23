@@ -2,7 +2,7 @@
 
 Este programa desarrollado en Python y Flask es un sistema de análisis de inteligencia artificial que utiliza un modelo de lenguaje avanzado para proporcionar respuestas detalladas y precisas a preguntas formuladas por los usuarios, basándose en información textual proporcionada. A continuación, se presenta una descripción detallada de cómo funciona el programa:
 
-Descripción General
+Descripción General: 
 El programa está diseñado para actuar como un analista de inteligencia artificial que sigue directrices estrictas para proporcionar respuestas precisas y basadas en evidencias a las consultas del usuario. El flujo de trabajo principal se estructura en torno al análisis de información textual proporcionada por el usuario y la formulación de respuestas que siguen un formato y una lógica específicos.
 
 Componentes Principales
