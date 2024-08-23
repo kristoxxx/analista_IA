@@ -5,7 +5,7 @@ Este programa desarrollado en Python y Flask es un sistema de análisis de intel
 Descripción General: 
 El programa está diseñado para actuar como un analista de inteligencia artificial que sigue directrices estrictas para proporcionar respuestas precisas y basadas en evidencias a las consultas del usuario. El flujo de trabajo principal se estructura en torno al análisis de información textual proporcionada por el usuario y la formulación de respuestas que siguen un formato y una lógica específicos.
 
-Componentes Principales
+Componentes Principales: 
 Interfaz de Usuario (UI):
 
 Utiliza Flask para desarrollar una interfaz web donde los usuarios pueden introducir su pregunta y la información relevante que desean analizar.
@@ -39,6 +39,7 @@ Análisis de documentos: Puede ser utilizado por profesionales que necesitan ext
 Consultas específicas: Ideal para situaciones en las que se requiere una respuesta precisa basada en un conjunto limitado de información.
 Investigación y revisión: Ayuda a los investigadores a obtener conclusiones lógicas y bien fundamentadas a partir de datos textuales.
 Consideraciones Técnicas
+
 Seguridad y Privacidad: El sistema debe implementar medidas para asegurar que la información del usuario se maneje de manera confidencial y segura.
 Escalabilidad: La arquitectura de Flask permite que el programa se amplíe fácilmente para manejar múltiples usuarios simultáneamente.
 Optimización del Modelo: El modelo de lenguaje debe estar finamente ajustado para seguir las directrices del prompt de manera efectiva, asegurando respuestas precisas y coherentes.
